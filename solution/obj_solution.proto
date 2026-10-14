@@ -1,0 +1,60 @@
+syntax            = "proto3";
+option go_package = "github.com/csuJudge/objectiveProto/objectiveSolution";
+
+package oj.objective.solution;
+
+service SolutionServer {
+  // AddSolution 添加提交数据
+  rpc AddSolution(AddSolutionReq) returns (AddSolutionRsp) {}
+  // QueryResult 查询结果
+  rpc QueryResult(QueryResultReq) returns (QueryResultRsp) {}
+  // QuerySolution 查询客观题做题记录
+  rpc QuerySolution(QuerySolutionReq) returns (QuerySolutionRsp) {}
+}
+
+
+message AddSolutionReq{
+  int32 problemID = 1;   // 题目编号
+  int32 userID = 2;   // 用户编号
+  int32 contestID = 3;   // 考试编号
+}
+
+message AddSolutionRsp{
+  string message = 1;  // 返回信息
+  int32 code = 2;  // 返回码
+  int32 solutionID = 3;  // 提交编
+}
+
+message QueryResultReq{
+  int32 solutionID = 1; // 提交编号
+  int32 userID = 2;   // 用户编号
+}
+
+message QueryResultRsp{
+  string message = 1;  // 返回信息
+  int32 code = 2;  // 返回码
+  int32 result = 3; // 结果
+}
+
+message QuerySolutionRsp{
+  string message = 1;  // 返回信息
+  int32 code     = 2;  // 返回码
+  int32 total = 3; // 总数
+  repeated Solution solution = 4; // 提交
+}
+
+message Solution{
+  int32 objectiveID       = 1;   // 客观题主键
+  int32 objectiveType     = 2;  // 客观题类型
+  int32 isRight           = 3;  // 是否做对
+  string creator          = 4;   // 题目类型
+  string createTime       = 5;   // 创建时间
+  string userAnswer = 6; // 你的答案
+}
+
+message QuerySolutionReq{
+  int32 page = 1; // 页
+  int32 limit = 2; // 页大小
+  int32 userID = 3; // 用户编号
+  int32 contestID = 4; // 作业编号
+}
