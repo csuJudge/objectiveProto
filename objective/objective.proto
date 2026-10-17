@@ -24,7 +24,7 @@ service ObjectiveServer {
 message QueryObjectiveAnswerRsp{
   string message = 1;  // 返回信息
   int32 code     = 2;  // 返回码
-  int32 answer = 3; // 答案
+  string answer = 3; // 答案
   int32 ObjectiveType = 4; // 类型
 }
 
