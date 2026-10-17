@@ -34,9 +34,10 @@ message Solution{
   int32 objectiveID       = 1;   // 客观题主键
   int32 objectiveType     = 2;  // 客观题类型
   int32 isRight           = 3;  // 是否做对
-  string creator          = 4;   // 题目类型
+  string creator          = 4;   // 提交人
   string createTime       = 5;   // 创建时间
   string userAnswer = 6; // 你的答案
+  int32 createdBy = 7; // 提交人的主键
 }
 
 message QuerySolutionReq{
