@@ -60,6 +60,8 @@ message Objective {
   repeated Option options = 9;   // 选项
   int32 objectiveType     = 10;  // 客观题类型
   int32 isRight           = 11;  // 是否做对
+  int32 submission = 13; // 提交数
+  int32 solved = 14; // 正确数
 }
 
 message QueryObjectiveRsp {
