@@ -6,8 +6,6 @@ package oj.objective.solution;
 service SolutionServer {
   // AddSolution 添加提交数据
   rpc AddSolution(AddSolutionReq) returns (AddSolutionRsp) {}
-  // QueryResult 查询结果
-  rpc QueryResult(QueryResultReq) returns (QueryResultRsp) {}
   // QuerySolution 查询客观题做题记录
   rpc QuerySolution(QuerySolutionReq) returns (QuerySolutionRsp) {}
 }
@@ -23,17 +21,6 @@ message AddSolutionRsp{
   string message = 1;  // 返回信息
   int32 code = 2;  // 返回码
   int32 solutionID = 3;  // 提交编
-}
-
-message QueryResultReq{
-  int32 solutionID = 1; // 提交编号
-  int32 userID = 2;   // 用户编号
-}
-
-message QueryResultRsp{
-  string message = 1;  // 返回信息
-  int32 code = 2;  // 返回码
-  int32 result = 3; // 结果
 }
 
 message QuerySolutionRsp{

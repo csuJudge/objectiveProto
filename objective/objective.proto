@@ -17,6 +17,15 @@ service ObjectiveServer {
   rpc QueryAllObjective(QueryObjectiveListReq) returns (QueryObjectiveListRsp) {}
   // QueryObjectiveList 分页查询客观题
   rpc QueryObjectiveList(QueryObjectiveListReq) returns (QueryObjectiveListRsp) {}
+  // QueryObjectiveAnswer 查询题目的答案
+  rpc QueryObjectiveAnswer(QueryObjectiveReq) returns (QueryObjectiveAnswerRsp) {}
+}
+
+message QueryObjectiveAnswerRsp{
+  string message = 1;  // 返回信息
+  int32 code     = 2;  // 返回码
+  int32 answer = 3; // 答案
+  int32 ObjectiveType = 4; // 类型
 }
 
 message CommonRsp {

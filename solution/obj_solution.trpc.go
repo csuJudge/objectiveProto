@@ -21,8 +21,6 @@ import (
 type SolutionServerService interface {
 	// AddSolution AddSolution 添加提交数据
 	AddSolution(ctx context.Context, req *AddSolutionReq) (*AddSolutionRsp, error)
-	// QueryResult QueryResult 查询结果
-	QueryResult(ctx context.Context, req *QueryResultReq) (*QueryResultRsp, error)
 	// QuerySolution QuerySolution 查询客观题做题记录
 	QuerySolution(ctx context.Context, req *QuerySolutionReq) (*QuerySolutionRsp, error)
 }
@@ -35,24 +33,6 @@ func SolutionServerService_AddSolution_Handler(svr interface{}, ctx context.Cont
 	}
 	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
 		return svr.(SolutionServerService).AddSolution(ctx, reqbody.(*AddSolutionReq))
-	}
-
-	var rsp interface{}
-	rsp, err = filters.Filter(ctx, req, handleFunc)
-	if err != nil {
-		return nil, err
-	}
-	return rsp, nil
-}
-
-func SolutionServerService_QueryResult_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
-	req := &QueryResultReq{}
-	filters, err := f(req)
-	if err != nil {
-		return nil, err
-	}
-	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
-		return svr.(SolutionServerService).QueryResult(ctx, reqbody.(*QueryResultReq))
 	}
 
 	var rsp interface{}
@@ -91,10 +71,6 @@ var SolutionServerServer_ServiceDesc = server.ServiceDesc{
 			Func: SolutionServerService_AddSolution_Handler,
 		},
 		{
-			Name: "/oj.objective.solution.SolutionServer/QueryResult",
-			Func: SolutionServerService_QueryResult_Handler,
-		},
-		{
 			Name: "/oj.objective.solution.SolutionServer/QuerySolution",
 			Func: SolutionServerService_QuerySolution_Handler,
 		},
@@ -117,11 +93,6 @@ func (s *UnimplementedSolutionServer) AddSolution(ctx context.Context, req *AddS
 	return nil, errors.New("rpc AddSolution of service SolutionServer is not implemented")
 }
 
-// QueryResult QueryResult 查询结果
-func (s *UnimplementedSolutionServer) QueryResult(ctx context.Context, req *QueryResultReq) (*QueryResultRsp, error) {
-	return nil, errors.New("rpc QueryResult of service SolutionServer is not implemented")
-}
-
 // QuerySolution QuerySolution 查询客观题做题记录
 func (s *UnimplementedSolutionServer) QuerySolution(ctx context.Context, req *QuerySolutionReq) (*QuerySolutionRsp, error) {
 	return nil, errors.New("rpc QuerySolution of service SolutionServer is not implemented")
@@ -137,8 +108,6 @@ func (s *UnimplementedSolutionServer) QuerySolution(ctx context.Context, req *Qu
 type SolutionServerClientProxy interface {
 	// AddSolution AddSolution 添加提交数据
 	AddSolution(ctx context.Context, req *AddSolutionReq, opts ...client.Option) (rsp *AddSolutionRsp, err error)
-	// QueryResult QueryResult 查询结果
-	QueryResult(ctx context.Context, req *QueryResultReq, opts ...client.Option) (rsp *QueryResultRsp, err error)
 	// QuerySolution QuerySolution 查询客观题做题记录
 	QuerySolution(ctx context.Context, req *QuerySolutionReq, opts ...client.Option) (rsp *QuerySolutionRsp, err error)
 }
@@ -166,26 +135,6 @@ func (c *SolutionServerClientProxyImpl) AddSolution(ctx context.Context, req *Ad
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &AddSolutionRsp{}
-	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
-		return nil, err
-	}
-	return rsp, nil
-}
-
-func (c *SolutionServerClientProxyImpl) QueryResult(ctx context.Context, req *QueryResultReq, opts ...client.Option) (*QueryResultRsp, error) {
-	ctx, msg := codec.WithCloneMessage(ctx)
-	defer codec.PutBackMessage(msg)
-	msg.WithClientRPCName("/oj.objective.solution.SolutionServer/QueryResult")
-	msg.WithCalleeServiceName(SolutionServerServer_ServiceDesc.ServiceName)
-	msg.WithCalleeApp("")
-	msg.WithCalleeServer("")
-	msg.WithCalleeService("SolutionServer")
-	msg.WithCalleeMethod("QueryResult")
-	msg.WithSerializationType(codec.SerializationTypePB)
-	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
-	callopts = append(callopts, c.opts...)
-	callopts = append(callopts, opts...)
-	rsp := &QueryResultRsp{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

@@ -90,6 +90,21 @@ func (mr *MockObjectiveServerServiceMockRecorder) QueryObjective(ctx, req any) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryObjective", reflect.TypeOf((*MockObjectiveServerService)(nil).QueryObjective), ctx, req)
 }
 
+// QueryObjectiveAnswer mocks base method.
+func (m *MockObjectiveServerService) QueryObjectiveAnswer(ctx context.Context, req *QueryObjectiveReq) (*QueryObjectiveAnswerRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "QueryObjectiveAnswer", ctx, req)
+	ret0, _ := ret[0].(*QueryObjectiveAnswerRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// QueryObjectiveAnswer indicates an expected call of QueryObjectiveAnswer.
+func (mr *MockObjectiveServerServiceMockRecorder) QueryObjectiveAnswer(ctx, req any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryObjectiveAnswer", reflect.TypeOf((*MockObjectiveServerService)(nil).QueryObjectiveAnswer), ctx, req)
+}
+
 // QueryObjectiveList mocks base method.
 func (m *MockObjectiveServerService) QueryObjectiveList(ctx context.Context, req *QueryObjectiveListReq) (*QueryObjectiveListRsp, error) {
 	m.ctrl.T.Helper()
@@ -221,6 +236,26 @@ func (mr *MockObjectiveServerClientProxyMockRecorder) QueryObjective(ctx, req an
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryObjective", reflect.TypeOf((*MockObjectiveServerClientProxy)(nil).QueryObjective), varargs...)
+}
+
+// QueryObjectiveAnswer mocks base method.
+func (m *MockObjectiveServerClientProxy) QueryObjectiveAnswer(ctx context.Context, req *QueryObjectiveReq, opts ...client.Option) (*QueryObjectiveAnswerRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "QueryObjectiveAnswer", varargs...)
+	ret0, _ := ret[0].(*QueryObjectiveAnswerRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// QueryObjectiveAnswer indicates an expected call of QueryObjectiveAnswer.
+func (mr *MockObjectiveServerClientProxyMockRecorder) QueryObjectiveAnswer(ctx, req any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryObjectiveAnswer", reflect.TypeOf((*MockObjectiveServerClientProxy)(nil).QueryObjectiveAnswer), varargs...)
 }
 
 // QueryObjectiveList mocks base method.
