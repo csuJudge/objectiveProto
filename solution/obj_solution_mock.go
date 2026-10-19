@@ -75,6 +75,21 @@ func (mr *MockSolutionServerServiceMockRecorder) QuerySolution(ctx, req any) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QuerySolution", reflect.TypeOf((*MockSolutionServerService)(nil).QuerySolution), ctx, req)
 }
 
+// QueryUserProblemSolutionResult mocks base method.
+func (m *MockSolutionServerService) QueryUserProblemSolutionResult(ctx context.Context, req *QueryUserProblemSolutionResultReq) (*QueryUserProblemSolutionResultRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "QueryUserProblemSolutionResult", ctx, req)
+	ret0, _ := ret[0].(*QueryUserProblemSolutionResultRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// QueryUserProblemSolutionResult indicates an expected call of QueryUserProblemSolutionResult.
+func (mr *MockSolutionServerServiceMockRecorder) QueryUserProblemSolutionResult(ctx, req any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryUserProblemSolutionResult", reflect.TypeOf((*MockSolutionServerService)(nil).QueryUserProblemSolutionResult), ctx, req)
+}
+
 // MockSolutionServerClientProxy is a mock of SolutionServerClientProxy interface.
 type MockSolutionServerClientProxy struct {
 	ctrl     *gomock.Controller
@@ -141,4 +156,24 @@ func (mr *MockSolutionServerClientProxyMockRecorder) QuerySolution(ctx, req any,
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QuerySolution", reflect.TypeOf((*MockSolutionServerClientProxy)(nil).QuerySolution), varargs...)
+}
+
+// QueryUserProblemSolutionResult mocks base method.
+func (m *MockSolutionServerClientProxy) QueryUserProblemSolutionResult(ctx context.Context, req *QueryUserProblemSolutionResultReq, opts ...client.Option) (*QueryUserProblemSolutionResultRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "QueryUserProblemSolutionResult", varargs...)
+	ret0, _ := ret[0].(*QueryUserProblemSolutionResultRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// QueryUserProblemSolutionResult indicates an expected call of QueryUserProblemSolutionResult.
+func (mr *MockSolutionServerClientProxyMockRecorder) QueryUserProblemSolutionResult(ctx, req any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryUserProblemSolutionResult", reflect.TypeOf((*MockSolutionServerClientProxy)(nil).QueryUserProblemSolutionResult), varargs...)
 }
