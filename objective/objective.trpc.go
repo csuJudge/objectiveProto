@@ -33,6 +33,8 @@ type ObjectiveServerService interface {
 	QueryObjectiveList(ctx context.Context, req *QueryObjectiveListReq) (*QueryObjectiveListRsp, error)
 	// QueryObjectiveAnswer QueryObjectiveAnswer 查询题目的答案
 	QueryObjectiveAnswer(ctx context.Context, req *QueryObjectiveReq) (*QueryObjectiveAnswerRsp, error)
+	// QueryContestProblem QueryContestProblem 查询作业的题目数据
+	QueryContestProblem(ctx context.Context, req *QueryContestProblemReq) (*QueryContestProblemReqRsp, error)
 }
 
 func ObjectiveServerService_AddObjective_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -161,6 +163,24 @@ func ObjectiveServerService_QueryObjectiveAnswer_Handler(svr interface{}, ctx co
 	return rsp, nil
 }
 
+func ObjectiveServerService_QueryContestProblem_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &QueryContestProblemReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(ObjectiveServerService).QueryContestProblem(ctx, reqbody.(*QueryContestProblemReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // ObjectiveServerServer_ServiceDesc descriptor for server.RegisterService.
 var ObjectiveServerServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "oj.objective.objective.ObjectiveServer",
@@ -193,6 +213,10 @@ var ObjectiveServerServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/oj.objective.objective.ObjectiveServer/QueryObjectiveAnswer",
 			Func: ObjectiveServerService_QueryObjectiveAnswer_Handler,
+		},
+		{
+			Name: "/oj.objective.objective.ObjectiveServer/QueryContestProblem",
+			Func: ObjectiveServerService_QueryContestProblem_Handler,
 		},
 	},
 }
@@ -243,6 +267,11 @@ func (s *UnimplementedObjectiveServer) QueryObjectiveAnswer(ctx context.Context,
 	return nil, errors.New("rpc QueryObjectiveAnswer of service ObjectiveServer is not implemented")
 }
 
+// QueryContestProblem QueryContestProblem 查询作业的题目数据
+func (s *UnimplementedObjectiveServer) QueryContestProblem(ctx context.Context, req *QueryContestProblemReq) (*QueryContestProblemReqRsp, error) {
+	return nil, errors.New("rpc QueryContestProblem of service ObjectiveServer is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -265,6 +294,8 @@ type ObjectiveServerClientProxy interface {
 	QueryObjectiveList(ctx context.Context, req *QueryObjectiveListReq, opts ...client.Option) (rsp *QueryObjectiveListRsp, err error)
 	// QueryObjectiveAnswer QueryObjectiveAnswer 查询题目的答案
 	QueryObjectiveAnswer(ctx context.Context, req *QueryObjectiveReq, opts ...client.Option) (rsp *QueryObjectiveAnswerRsp, err error)
+	// QueryContestProblem QueryContestProblem 查询作业的题目数据
+	QueryContestProblem(ctx context.Context, req *QueryContestProblemReq, opts ...client.Option) (rsp *QueryContestProblemReqRsp, err error)
 }
 
 type ObjectiveServerClientProxyImpl struct {
@@ -410,6 +441,26 @@ func (c *ObjectiveServerClientProxyImpl) QueryObjectiveAnswer(ctx context.Contex
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &QueryObjectiveAnswerRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *ObjectiveServerClientProxyImpl) QueryContestProblem(ctx context.Context, req *QueryContestProblemReq, opts ...client.Option) (*QueryContestProblemReqRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/oj.objective.objective.ObjectiveServer/QueryContestProblem")
+	msg.WithCalleeServiceName(ObjectiveServerServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("ObjectiveServer")
+	msg.WithCalleeMethod("QueryContestProblem")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &QueryContestProblemReqRsp{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

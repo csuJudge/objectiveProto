@@ -14,6 +14,8 @@ service ContestServer {
   rpc UpdateContest(UpdateContestReq) returns (CommonRsp) {}
   // QueryContestPrivilegeInfo 查询作业的权限信息
   rpc QueryContestPrivilegeInfo(QueryContestReq) returns (QueryContestPrivilegeInfoRsp) {}
+  // UpdateContestStatus 更新作业状态
+  rpc UpdateContestStatus(UpdateContestStatusReq) returns (CommonRsp) {}
 }
 
 message QueryContestPrivilegeInfoRsp {

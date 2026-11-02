@@ -29,6 +29,8 @@ type ContestServerService interface {
 	UpdateContest(ctx context.Context, req *UpdateContestReq) (*CommonRsp, error)
 	// QueryContestPrivilegeInfo QueryContestPrivilegeInfo 查询作业的权限信息
 	QueryContestPrivilegeInfo(ctx context.Context, req *QueryContestReq) (*QueryContestPrivilegeInfoRsp, error)
+	// UpdateContestStatus UpdateContestStatus 更新作业状态
+	UpdateContestStatus(ctx context.Context, req *UpdateContestStatusReq) (*CommonRsp, error)
 }
 
 func ContestServerService_QueryContest_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -121,6 +123,24 @@ func ContestServerService_QueryContestPrivilegeInfo_Handler(svr interface{}, ctx
 	return rsp, nil
 }
 
+func ContestServerService_UpdateContestStatus_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &UpdateContestStatusReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(ContestServerService).UpdateContestStatus(ctx, reqbody.(*UpdateContestStatusReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // ContestServerServer_ServiceDesc descriptor for server.RegisterService.
 var ContestServerServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "oj.contest.knowledge.ContestServer",
@@ -145,6 +165,10 @@ var ContestServerServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/oj.contest.knowledge.ContestServer/QueryContestPrivilegeInfo",
 			Func: ContestServerService_QueryContestPrivilegeInfo_Handler,
+		},
+		{
+			Name: "/oj.contest.knowledge.ContestServer/UpdateContestStatus",
+			Func: ContestServerService_UpdateContestStatus_Handler,
 		},
 	},
 }
@@ -185,6 +209,11 @@ func (s *UnimplementedContestServer) QueryContestPrivilegeInfo(ctx context.Conte
 	return nil, errors.New("rpc QueryContestPrivilegeInfo of service ContestServer is not implemented")
 }
 
+// UpdateContestStatus UpdateContestStatus 更新作业状态
+func (s *UnimplementedContestServer) UpdateContestStatus(ctx context.Context, req *UpdateContestStatusReq) (*CommonRsp, error) {
+	return nil, errors.New("rpc UpdateContestStatus of service ContestServer is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -203,6 +232,8 @@ type ContestServerClientProxy interface {
 	UpdateContest(ctx context.Context, req *UpdateContestReq, opts ...client.Option) (rsp *CommonRsp, err error)
 	// QueryContestPrivilegeInfo QueryContestPrivilegeInfo 查询作业的权限信息
 	QueryContestPrivilegeInfo(ctx context.Context, req *QueryContestReq, opts ...client.Option) (rsp *QueryContestPrivilegeInfoRsp, err error)
+	// UpdateContestStatus UpdateContestStatus 更新作业状态
+	UpdateContestStatus(ctx context.Context, req *UpdateContestStatusReq, opts ...client.Option) (rsp *CommonRsp, err error)
 }
 
 type ContestServerClientProxyImpl struct {
@@ -308,6 +339,26 @@ func (c *ContestServerClientProxyImpl) QueryContestPrivilegeInfo(ctx context.Con
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &QueryContestPrivilegeInfoRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *ContestServerClientProxyImpl) UpdateContestStatus(ctx context.Context, req *UpdateContestStatusReq, opts ...client.Option) (*CommonRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/oj.contest.knowledge.ContestServer/UpdateContestStatus")
+	msg.WithCalleeServiceName(ContestServerServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("ContestServer")
+	msg.WithCalleeMethod("UpdateContestStatus")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &CommonRsp{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}
