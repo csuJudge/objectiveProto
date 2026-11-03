@@ -19,10 +19,6 @@ import (
 
 // ContestServerService defines service.
 type ContestServerService interface {
-	// QueryContest QueryContest 查询作业
-	QueryContest(ctx context.Context, req *QueryContestReq) (*QueryContestRsp, error)
-	// QueryContestList QueryContestList 查询作业列表
-	QueryContestList(ctx context.Context, req *QueryContestListReq) (*QueryContestListRsp, error)
 	// AddContest AddContest 添加作业
 	AddContest(ctx context.Context, req *AddContestReq) (*CommonRsp, error)
 	// UpdateContest UpdateContest 更新作业
@@ -31,42 +27,6 @@ type ContestServerService interface {
 	QueryContestPrivilegeInfo(ctx context.Context, req *QueryContestReq) (*QueryContestPrivilegeInfoRsp, error)
 	// UpdateContestStatus UpdateContestStatus 更新作业状态
 	UpdateContestStatus(ctx context.Context, req *UpdateContestStatusReq) (*CommonRsp, error)
-}
-
-func ContestServerService_QueryContest_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
-	req := &QueryContestReq{}
-	filters, err := f(req)
-	if err != nil {
-		return nil, err
-	}
-	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
-		return svr.(ContestServerService).QueryContest(ctx, reqbody.(*QueryContestReq))
-	}
-
-	var rsp interface{}
-	rsp, err = filters.Filter(ctx, req, handleFunc)
-	if err != nil {
-		return nil, err
-	}
-	return rsp, nil
-}
-
-func ContestServerService_QueryContestList_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
-	req := &QueryContestListReq{}
-	filters, err := f(req)
-	if err != nil {
-		return nil, err
-	}
-	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
-		return svr.(ContestServerService).QueryContestList(ctx, reqbody.(*QueryContestListReq))
-	}
-
-	var rsp interface{}
-	rsp, err = filters.Filter(ctx, req, handleFunc)
-	if err != nil {
-		return nil, err
-	}
-	return rsp, nil
 }
 
 func ContestServerService_AddContest_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -147,14 +107,6 @@ var ContestServerServer_ServiceDesc = server.ServiceDesc{
 	HandlerType: ((*ContestServerService)(nil)),
 	Methods: []server.Method{
 		{
-			Name: "/oj.contest.knowledge.ContestServer/QueryContest",
-			Func: ContestServerService_QueryContest_Handler,
-		},
-		{
-			Name: "/oj.contest.knowledge.ContestServer/QueryContestList",
-			Func: ContestServerService_QueryContestList_Handler,
-		},
-		{
 			Name: "/oj.contest.knowledge.ContestServer/AddContest",
 			Func: ContestServerService_AddContest_Handler,
 		},
@@ -184,16 +136,6 @@ func RegisterContestServerService(s server.Service, svr ContestServerService) {
 
 type UnimplementedContestServer struct{}
 
-// QueryContest QueryContest 查询作业
-func (s *UnimplementedContestServer) QueryContest(ctx context.Context, req *QueryContestReq) (*QueryContestRsp, error) {
-	return nil, errors.New("rpc QueryContest of service ContestServer is not implemented")
-}
-
-// QueryContestList QueryContestList 查询作业列表
-func (s *UnimplementedContestServer) QueryContestList(ctx context.Context, req *QueryContestListReq) (*QueryContestListRsp, error) {
-	return nil, errors.New("rpc QueryContestList of service ContestServer is not implemented")
-}
-
 // AddContest AddContest 添加作业
 func (s *UnimplementedContestServer) AddContest(ctx context.Context, req *AddContestReq) (*CommonRsp, error) {
 	return nil, errors.New("rpc AddContest of service ContestServer is not implemented")
@@ -222,10 +164,6 @@ func (s *UnimplementedContestServer) UpdateContestStatus(ctx context.Context, re
 
 // ContestServerClientProxy defines service client proxy
 type ContestServerClientProxy interface {
-	// QueryContest QueryContest 查询作业
-	QueryContest(ctx context.Context, req *QueryContestReq, opts ...client.Option) (rsp *QueryContestRsp, err error)
-	// QueryContestList QueryContestList 查询作业列表
-	QueryContestList(ctx context.Context, req *QueryContestListReq, opts ...client.Option) (rsp *QueryContestListRsp, err error)
 	// AddContest AddContest 添加作业
 	AddContest(ctx context.Context, req *AddContestReq, opts ...client.Option) (rsp *CommonRsp, err error)
 	// UpdateContest UpdateContest 更新作业
@@ -243,46 +181,6 @@ type ContestServerClientProxyImpl struct {
 
 var NewContestServerClientProxy = func(opts ...client.Option) ContestServerClientProxy {
 	return &ContestServerClientProxyImpl{client: client.DefaultClient, opts: opts}
-}
-
-func (c *ContestServerClientProxyImpl) QueryContest(ctx context.Context, req *QueryContestReq, opts ...client.Option) (*QueryContestRsp, error) {
-	ctx, msg := codec.WithCloneMessage(ctx)
-	defer codec.PutBackMessage(msg)
-	msg.WithClientRPCName("/oj.contest.knowledge.ContestServer/QueryContest")
-	msg.WithCalleeServiceName(ContestServerServer_ServiceDesc.ServiceName)
-	msg.WithCalleeApp("")
-	msg.WithCalleeServer("")
-	msg.WithCalleeService("ContestServer")
-	msg.WithCalleeMethod("QueryContest")
-	msg.WithSerializationType(codec.SerializationTypePB)
-	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
-	callopts = append(callopts, c.opts...)
-	callopts = append(callopts, opts...)
-	rsp := &QueryContestRsp{}
-	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
-		return nil, err
-	}
-	return rsp, nil
-}
-
-func (c *ContestServerClientProxyImpl) QueryContestList(ctx context.Context, req *QueryContestListReq, opts ...client.Option) (*QueryContestListRsp, error) {
-	ctx, msg := codec.WithCloneMessage(ctx)
-	defer codec.PutBackMessage(msg)
-	msg.WithClientRPCName("/oj.contest.knowledge.ContestServer/QueryContestList")
-	msg.WithCalleeServiceName(ContestServerServer_ServiceDesc.ServiceName)
-	msg.WithCalleeApp("")
-	msg.WithCalleeServer("")
-	msg.WithCalleeService("ContestServer")
-	msg.WithCalleeMethod("QueryContestList")
-	msg.WithSerializationType(codec.SerializationTypePB)
-	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
-	callopts = append(callopts, c.opts...)
-	callopts = append(callopts, opts...)
-	rsp := &QueryContestListRsp{}
-	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
-		return nil, err
-	}
-	return rsp, nil
 }
 
 func (c *ContestServerClientProxyImpl) AddContest(ctx context.Context, req *AddContestReq, opts ...client.Option) (*CommonRsp, error) {

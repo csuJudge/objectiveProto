@@ -60,36 +60,6 @@ func (mr *MockContestServerServiceMockRecorder) AddContest(ctx, req any) *gomock
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddContest", reflect.TypeOf((*MockContestServerService)(nil).AddContest), ctx, req)
 }
 
-// QueryContest mocks base method.
-func (m *MockContestServerService) QueryContest(ctx context.Context, req *QueryContestReq) (*QueryContestRsp, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "QueryContest", ctx, req)
-	ret0, _ := ret[0].(*QueryContestRsp)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// QueryContest indicates an expected call of QueryContest.
-func (mr *MockContestServerServiceMockRecorder) QueryContest(ctx, req any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryContest", reflect.TypeOf((*MockContestServerService)(nil).QueryContest), ctx, req)
-}
-
-// QueryContestList mocks base method.
-func (m *MockContestServerService) QueryContestList(ctx context.Context, req *QueryContestListReq) (*QueryContestListRsp, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "QueryContestList", ctx, req)
-	ret0, _ := ret[0].(*QueryContestListRsp)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// QueryContestList indicates an expected call of QueryContestList.
-func (mr *MockContestServerServiceMockRecorder) QueryContestList(ctx, req any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryContestList", reflect.TypeOf((*MockContestServerService)(nil).QueryContestList), ctx, req)
-}
-
 // QueryContestPrivilegeInfo mocks base method.
 func (m *MockContestServerService) QueryContestPrivilegeInfo(ctx context.Context, req *QueryContestReq) (*QueryContestPrivilegeInfoRsp, error) {
 	m.ctrl.T.Helper()
@@ -118,6 +88,21 @@ func (m *MockContestServerService) UpdateContest(ctx context.Context, req *Updat
 func (mr *MockContestServerServiceMockRecorder) UpdateContest(ctx, req any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateContest", reflect.TypeOf((*MockContestServerService)(nil).UpdateContest), ctx, req)
+}
+
+// UpdateContestStatus mocks base method.
+func (m *MockContestServerService) UpdateContestStatus(ctx context.Context, req *UpdateContestStatusReq) (*CommonRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateContestStatus", ctx, req)
+	ret0, _ := ret[0].(*CommonRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateContestStatus indicates an expected call of UpdateContestStatus.
+func (mr *MockContestServerServiceMockRecorder) UpdateContestStatus(ctx, req any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateContestStatus", reflect.TypeOf((*MockContestServerService)(nil).UpdateContestStatus), ctx, req)
 }
 
 // MockContestServerClientProxy is a mock of ContestServerClientProxy interface.
@@ -168,46 +153,6 @@ func (mr *MockContestServerClientProxyMockRecorder) AddContest(ctx, req any, opt
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddContest", reflect.TypeOf((*MockContestServerClientProxy)(nil).AddContest), varargs...)
 }
 
-// QueryContest mocks base method.
-func (m *MockContestServerClientProxy) QueryContest(ctx context.Context, req *QueryContestReq, opts ...client.Option) (*QueryContestRsp, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{ctx, req}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "QueryContest", varargs...)
-	ret0, _ := ret[0].(*QueryContestRsp)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// QueryContest indicates an expected call of QueryContest.
-func (mr *MockContestServerClientProxyMockRecorder) QueryContest(ctx, req any, opts ...any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx, req}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryContest", reflect.TypeOf((*MockContestServerClientProxy)(nil).QueryContest), varargs...)
-}
-
-// QueryContestList mocks base method.
-func (m *MockContestServerClientProxy) QueryContestList(ctx context.Context, req *QueryContestListReq, opts ...client.Option) (*QueryContestListRsp, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{ctx, req}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "QueryContestList", varargs...)
-	ret0, _ := ret[0].(*QueryContestListRsp)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// QueryContestList indicates an expected call of QueryContestList.
-func (mr *MockContestServerClientProxyMockRecorder) QueryContestList(ctx, req any, opts ...any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx, req}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryContestList", reflect.TypeOf((*MockContestServerClientProxy)(nil).QueryContestList), varargs...)
-}
-
 // QueryContestPrivilegeInfo mocks base method.
 func (m *MockContestServerClientProxy) QueryContestPrivilegeInfo(ctx context.Context, req *QueryContestReq, opts ...client.Option) (*QueryContestPrivilegeInfoRsp, error) {
 	m.ctrl.T.Helper()
@@ -246,4 +191,24 @@ func (mr *MockContestServerClientProxyMockRecorder) UpdateContest(ctx, req any, 
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateContest", reflect.TypeOf((*MockContestServerClientProxy)(nil).UpdateContest), varargs...)
+}
+
+// UpdateContestStatus mocks base method.
+func (m *MockContestServerClientProxy) UpdateContestStatus(ctx context.Context, req *UpdateContestStatusReq, opts ...client.Option) (*CommonRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UpdateContestStatus", varargs...)
+	ret0, _ := ret[0].(*CommonRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateContestStatus indicates an expected call of UpdateContestStatus.
+func (mr *MockContestServerClientProxyMockRecorder) UpdateContestStatus(ctx, req any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateContestStatus", reflect.TypeOf((*MockContestServerClientProxy)(nil).UpdateContestStatus), varargs...)
 }
