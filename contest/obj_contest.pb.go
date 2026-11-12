@@ -948,6 +948,7 @@ type ContestProblem struct {
 	Difficulty    int32                  `protobuf:"varint,6,opt,name=difficulty,proto3" json:"difficulty,omitempty"`  // 难度
 	Score         int32                  `protobuf:"varint,7,opt,name=score,proto3" json:"score,omitempty"`            // 得分
 	PassRate      float32                `protobuf:"fixed32,8,opt,name=passRate,proto3" json:"passRate,omitempty"`     // 通过率
+	Reply         string                 `protobuf:"bytes,9,opt,name=reply,proto3" json:"reply,omitempty"`             // 学生本人的作答, 未作答为空
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1036,6 +1037,13 @@ func (x *ContestProblem) GetPassRate() float32 {
 		return x.PassRate
 	}
 	return 0
+}
+
+func (x *ContestProblem) GetReply() string {
+	if x != nil {
+		return x.Reply
+	}
+	return ""
 }
 
 type Class struct {
@@ -1232,7 +1240,7 @@ const file_obj_contest_proto_rawDesc = "" +
 	"\fparticipants\x18\x0e \x01(\x05R\fparticipants\x12\x1c\n" +
 	"\tcanUpdate\x18\x0f \x01(\x05R\tcanUpdate\x12\x12\n" +
 	"\x04mode\x18\x10 \x01(\x05R\x04mode\x12 \n" +
-	"\vcontestType\x18\x11 \x01(\x05R\vcontestType\"\xf2\x01\n" +
+	"\vcontestType\x18\x11 \x01(\x05R\vcontestType\"\x88\x02\n" +
 	"\x0eContestProblem\x12\x1c\n" +
 	"\tproblemID\x18\x01 \x01(\x05R\tproblemID\x12 \n" +
 	"\vproblemName\x18\x02 \x01(\tR\vproblemName\x12\x16\n" +
@@ -1245,7 +1253,8 @@ const file_obj_contest_proto_rawDesc = "" +
 	"difficulty\x18\x06 \x01(\x05R\n" +
 	"difficulty\x12\x14\n" +
 	"\x05score\x18\a \x01(\x05R\x05score\x12\x1a\n" +
-	"\bpassRate\x18\b \x01(\x02R\bpassRate\"?\n" +
+	"\bpassRate\x18\b \x01(\x02R\bpassRate\x12\x14\n" +
+	"\x05reply\x18\t \x01(\tR\x05reply\"?\n" +
 	"\x05Class\x12\x18\n" +
 	"\aclassID\x18\x01 \x01(\x05R\aclassID\x12\x1c\n" +
 	"\tClassName\x18\x02 \x01(\tR\tClassName\"9\n" +

@@ -131,6 +131,7 @@ message ContestProblem {
   int32 difficulty   = 6;  // 难度
   int32 score = 7; // 得分
   float passRate = 8; // 通过率
+  string reply = 9; // 学生本人的作答, 未作答为空
 }
 
 message Class {
