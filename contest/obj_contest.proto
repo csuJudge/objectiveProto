@@ -16,6 +16,8 @@ service ContestServer {
   rpc QueryContestPrivilegeInfo(QueryContestReq) returns (QueryContestPrivilegeInfoRsp) {}
   // UpdateContestStatus 更新作业状态
   rpc UpdateContestStatus(UpdateContestStatusReq) returns (CommonRsp) {}
+  // QueryContestResult 查询作业结果分析(创建人或管理员)
+  rpc QueryContestResult(QueryContestResultReq) returns (QueryContestResultRsp) {}
 }
 
 message QueryContestPrivilegeInfoRsp {
@@ -142,4 +144,53 @@ message Class {
 message CommonRsp {
   string message = 1;  // 返回信息
   int32 code     = 2;  // 返回码
+}
+
+message QueryContestResultReq {
+  int32 contestID = 1;  // 作业编号
+  int32 userID    = 2;  // 调用者主键
+}
+
+message QueryContestResultRsp {
+  string message                    = 1;  // 返回信息
+  int32  code                       = 2;  // 返回码
+  repeated ContestResultStudent students = 3;  // 成绩榜(按名次升序)
+  repeated ContestResultProblem problems = 4;  // 逐题统计
+  repeated ContestResultKnowledge knowledge = 5;  // 知识点统计
+  int32 submitCount                 = 6;  // 已交作业人数
+  int32 avgScore                    = 7;  // 已交学生平均分(四舍五入)
+  int32 fullScore                   = 8;  // 试卷满分(各题分值和)
+}
+
+message ContestResultStudent {
+  int32  userID       = 1;  // 学生主键
+  string name         = 2;  // 学生姓名
+  int32  score        = 3;  // 总分
+  int32  correctCount = 4;  // 答对题数
+  int32  submitCount  = 5;  // 作答过的题数
+  int32  rank         = 6;  // 名次(同分同名次)
+  repeated ContestResultItem items = 7;  // 逐题明细(按作业题目顺序)
+}
+
+message ContestResultItem {
+  int32  objectiveID  = 1;  // 题目编号
+  string reply        = 2;  // 学生作答, 未作答为空
+  int32  result       = 3;  // 1 对 / 0 错 / -1 待判定
+  int32  score        = 4;  // 本题得分
+}
+
+message ContestResultProblem {
+  int32  objectiveID   = 1;  // 题目编号
+  string name          = 2;  // 题目名称
+  int32  score         = 3;  // 本题分值
+  int32  submitCount   = 4;  // 作答人数
+  int32  correctCount  = 5;  // 答对人数
+  float  answerRate    = 6;  // 正确率(0~1)
+}
+
+message ContestResultKnowledge {
+  string knowledgeID   = 1;  // 知识点编号(题目多知识点时逐一计入)
+  int32  submitCount   = 2;  // 关联题目的作答数
+  int32  correctCount  = 3;  // 关联题目的答对数
+  float  answerRate    = 4;  // 正确率(0~1)
 }
