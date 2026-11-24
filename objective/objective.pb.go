@@ -1053,6 +1053,154 @@ func (x *UpdateObjectiveStatusReq) GetStatus() int32 {
 	return 0
 }
 
+type QueryObjectiveNameReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        int32                  `protobuf:"varint,1,opt,name=userID,proto3" json:"userID,omitempty"` // 用户编号，决定能否看到未发布题
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryObjectiveNameReq) Reset() {
+	*x = QueryObjectiveNameReq{}
+	mi := &file_objective_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryObjectiveNameReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryObjectiveNameReq) ProtoMessage() {}
+
+func (x *QueryObjectiveNameReq) ProtoReflect() protoreflect.Message {
+	mi := &file_objective_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryObjectiveNameReq.ProtoReflect.Descriptor instead.
+func (*QueryObjectiveNameReq) Descriptor() ([]byte, []int) {
+	return file_objective_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *QueryObjectiveNameReq) GetUserID() int32 {
+	if x != nil {
+		return x.UserID
+	}
+	return 0
+}
+
+type ObjectiveNameData struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ObjectiveID   int32                  `protobuf:"varint,1,opt,name=objectiveID,proto3" json:"objectiveID,omitempty"`    // 客观题主键
+	ObjectiveName string                 `protobuf:"bytes,2,opt,name=objectiveName,proto3" json:"objectiveName,omitempty"` // 客观题名称
+	Knowledges    string                 `protobuf:"bytes,3,opt,name=knowledges,proto3" json:"knowledges,omitempty"`       // 知识点名称，逗号分隔，无知识点为空
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ObjectiveNameData) Reset() {
+	*x = ObjectiveNameData{}
+	mi := &file_objective_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ObjectiveNameData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ObjectiveNameData) ProtoMessage() {}
+
+func (x *ObjectiveNameData) ProtoReflect() protoreflect.Message {
+	mi := &file_objective_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ObjectiveNameData.ProtoReflect.Descriptor instead.
+func (*ObjectiveNameData) Descriptor() ([]byte, []int) {
+	return file_objective_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ObjectiveNameData) GetObjectiveID() int32 {
+	if x != nil {
+		return x.ObjectiveID
+	}
+	return 0
+}
+
+func (x *ObjectiveNameData) GetObjectiveName() string {
+	if x != nil {
+		return x.ObjectiveName
+	}
+	return ""
+}
+
+func (x *ObjectiveNameData) GetKnowledges() string {
+	if x != nil {
+		return x.Knowledges
+	}
+	return ""
+}
+
+type QueryObjectiveNameRsp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Names         []*ObjectiveNameData   `protobuf:"bytes,1,rep,name=names,proto3" json:"names,omitempty"` // 题名集合，按 objectiveID 升序
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryObjectiveNameRsp) Reset() {
+	*x = QueryObjectiveNameRsp{}
+	mi := &file_objective_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryObjectiveNameRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryObjectiveNameRsp) ProtoMessage() {}
+
+func (x *QueryObjectiveNameRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_objective_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryObjectiveNameRsp.ProtoReflect.Descriptor instead.
+func (*QueryObjectiveNameRsp) Descriptor() ([]byte, []int) {
+	return file_objective_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *QueryObjectiveNameRsp) GetNames() []*ObjectiveNameData {
+	if x != nil {
+		return x.Names
+	}
+	return nil
+}
+
 var File_objective_proto protoreflect.FileDescriptor
 
 const file_objective_proto_rawDesc = "" +
@@ -1146,7 +1294,17 @@ const file_objective_proto_rawDesc = "" +
 	"\x18UpdateObjectiveStatusReq\x12 \n" +
 	"\vobjectiveID\x18\x01 \x01(\x05R\vobjectiveID\x12\x16\n" +
 	"\x06userID\x18\x02 \x01(\x05R\x06userID\x12\x16\n" +
-	"\x06status\x18\x03 \x01(\x05R\x06status2\x8a\a\n" +
+	"\x06status\x18\x03 \x01(\x05R\x06status\"/\n" +
+	"\x15QueryObjectiveNameReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\x05R\x06userID\"{\n" +
+	"\x11ObjectiveNameData\x12 \n" +
+	"\vobjectiveID\x18\x01 \x01(\x05R\vobjectiveID\x12$\n" +
+	"\robjectiveName\x18\x02 \x01(\tR\robjectiveName\x12\x1e\n" +
+	"\n" +
+	"knowledges\x18\x03 \x01(\tR\n" +
+	"knowledges\"X\n" +
+	"\x15QueryObjectiveNameRsp\x12?\n" +
+	"\x05names\x18\x01 \x03(\v2).oj.objective.objective.ObjectiveNameDataR\x05names2\x80\b\n" +
 	"\x0fObjectiveServer\x12\\\n" +
 	"\fAddObjective\x12'.oj.objective.objective.AddObjectiveReq\x1a!.oj.objective.objective.CommonRsp\"\x00\x12b\n" +
 	"\x0fUpdateObjective\x12*.oj.objective.objective.UpdateObjectiveReq\x1a!.oj.objective.objective.CommonRsp\"\x00\x12n\n" +
@@ -1155,7 +1313,8 @@ const file_objective_proto_rawDesc = "" +
 	"\x11QueryAllObjective\x12-.oj.objective.objective.QueryObjectiveListReq\x1a-.oj.objective.objective.QueryObjectiveListRsp\"\x00\x12t\n" +
 	"\x12QueryObjectiveList\x12-.oj.objective.objective.QueryObjectiveListReq\x1a-.oj.objective.objective.QueryObjectiveListRsp\"\x00\x12t\n" +
 	"\x14QueryObjectiveAnswer\x12).oj.objective.objective.QueryObjectiveReq\x1a/.oj.objective.objective.QueryObjectiveAnswerRsp\"\x00\x12z\n" +
-	"\x13QueryContestProblem\x12..oj.objective.objective.QueryContestProblemReq\x1a1.oj.objective.objective.QueryContestProblemReqRsp\"\x00B.Z,github.com/csuJudge/objectiveProto/objectiveb\x06proto3"
+	"\x13QueryContestProblem\x12..oj.objective.objective.QueryContestProblemReq\x1a1.oj.objective.objective.QueryContestProblemReqRsp\"\x00\x12t\n" +
+	"\x12QueryObjectiveName\x12-.oj.objective.objective.QueryObjectiveNameReq\x1a-.oj.objective.objective.QueryObjectiveNameRsp\"\x00B.Z,github.com/csuJudge/objectiveProto/objectiveb\x06proto3"
 
 var (
 	file_objective_proto_rawDescOnce sync.Once
@@ -1169,7 +1328,7 @@ func file_objective_proto_rawDescGZIP() []byte {
 	return file_objective_proto_rawDescData
 }
 
-var file_objective_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_objective_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_objective_proto_goTypes = []any{
 	(*QueryContestProblemReq)(nil),    // 0: oj.objective.objective.QueryContestProblemReq
 	(*QueryContestProblemReqRsp)(nil), // 1: oj.objective.objective.QueryContestProblemReqRsp
@@ -1185,33 +1344,39 @@ var file_objective_proto_goTypes = []any{
 	(*AddObjectiveReq)(nil),           // 11: oj.objective.objective.AddObjectiveReq
 	(*UpdateObjectiveReq)(nil),        // 12: oj.objective.objective.UpdateObjectiveReq
 	(*UpdateObjectiveStatusReq)(nil),  // 13: oj.objective.objective.UpdateObjectiveStatusReq
+	(*QueryObjectiveNameReq)(nil),     // 14: oj.objective.objective.QueryObjectiveNameReq
+	(*ObjectiveNameData)(nil),         // 15: oj.objective.objective.ObjectiveNameData
+	(*QueryObjectiveNameRsp)(nil),     // 16: oj.objective.objective.QueryObjectiveNameRsp
 }
 var file_objective_proto_depIdxs = []int32{
 	2,  // 0: oj.objective.objective.QueryContestProblemReqRsp.problems:type_name -> oj.objective.objective.ContestProblem
 	9,  // 1: oj.objective.objective.QueryObjectiveListRsp.objectives:type_name -> oj.objective.objective.Objective
 	8,  // 2: oj.objective.objective.Objective.options:type_name -> oj.objective.objective.Option
 	9,  // 3: oj.objective.objective.QueryObjectiveRsp.objective:type_name -> oj.objective.objective.Objective
-	11, // 4: oj.objective.objective.ObjectiveServer.AddObjective:input_type -> oj.objective.objective.AddObjectiveReq
-	12, // 5: oj.objective.objective.ObjectiveServer.UpdateObjective:input_type -> oj.objective.objective.UpdateObjectiveReq
-	13, // 6: oj.objective.objective.ObjectiveServer.UpdateObjectiveStatus:input_type -> oj.objective.objective.UpdateObjectiveStatusReq
-	7,  // 7: oj.objective.objective.ObjectiveServer.QueryObjective:input_type -> oj.objective.objective.QueryObjectiveReq
-	6,  // 8: oj.objective.objective.ObjectiveServer.QueryAllObjective:input_type -> oj.objective.objective.QueryObjectiveListReq
-	6,  // 9: oj.objective.objective.ObjectiveServer.QueryObjectiveList:input_type -> oj.objective.objective.QueryObjectiveListReq
-	7,  // 10: oj.objective.objective.ObjectiveServer.QueryObjectiveAnswer:input_type -> oj.objective.objective.QueryObjectiveReq
-	0,  // 11: oj.objective.objective.ObjectiveServer.QueryContestProblem:input_type -> oj.objective.objective.QueryContestProblemReq
-	4,  // 12: oj.objective.objective.ObjectiveServer.AddObjective:output_type -> oj.objective.objective.CommonRsp
-	4,  // 13: oj.objective.objective.ObjectiveServer.UpdateObjective:output_type -> oj.objective.objective.CommonRsp
-	4,  // 14: oj.objective.objective.ObjectiveServer.UpdateObjectiveStatus:output_type -> oj.objective.objective.CommonRsp
-	10, // 15: oj.objective.objective.ObjectiveServer.QueryObjective:output_type -> oj.objective.objective.QueryObjectiveRsp
-	5,  // 16: oj.objective.objective.ObjectiveServer.QueryAllObjective:output_type -> oj.objective.objective.QueryObjectiveListRsp
-	5,  // 17: oj.objective.objective.ObjectiveServer.QueryObjectiveList:output_type -> oj.objective.objective.QueryObjectiveListRsp
-	3,  // 18: oj.objective.objective.ObjectiveServer.QueryObjectiveAnswer:output_type -> oj.objective.objective.QueryObjectiveAnswerRsp
-	1,  // 19: oj.objective.objective.ObjectiveServer.QueryContestProblem:output_type -> oj.objective.objective.QueryContestProblemReqRsp
-	12, // [12:20] is the sub-list for method output_type
-	4,  // [4:12] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	15, // 4: oj.objective.objective.QueryObjectiveNameRsp.names:type_name -> oj.objective.objective.ObjectiveNameData
+	11, // 5: oj.objective.objective.ObjectiveServer.AddObjective:input_type -> oj.objective.objective.AddObjectiveReq
+	12, // 6: oj.objective.objective.ObjectiveServer.UpdateObjective:input_type -> oj.objective.objective.UpdateObjectiveReq
+	13, // 7: oj.objective.objective.ObjectiveServer.UpdateObjectiveStatus:input_type -> oj.objective.objective.UpdateObjectiveStatusReq
+	7,  // 8: oj.objective.objective.ObjectiveServer.QueryObjective:input_type -> oj.objective.objective.QueryObjectiveReq
+	6,  // 9: oj.objective.objective.ObjectiveServer.QueryAllObjective:input_type -> oj.objective.objective.QueryObjectiveListReq
+	6,  // 10: oj.objective.objective.ObjectiveServer.QueryObjectiveList:input_type -> oj.objective.objective.QueryObjectiveListReq
+	7,  // 11: oj.objective.objective.ObjectiveServer.QueryObjectiveAnswer:input_type -> oj.objective.objective.QueryObjectiveReq
+	0,  // 12: oj.objective.objective.ObjectiveServer.QueryContestProblem:input_type -> oj.objective.objective.QueryContestProblemReq
+	14, // 13: oj.objective.objective.ObjectiveServer.QueryObjectiveName:input_type -> oj.objective.objective.QueryObjectiveNameReq
+	4,  // 14: oj.objective.objective.ObjectiveServer.AddObjective:output_type -> oj.objective.objective.CommonRsp
+	4,  // 15: oj.objective.objective.ObjectiveServer.UpdateObjective:output_type -> oj.objective.objective.CommonRsp
+	4,  // 16: oj.objective.objective.ObjectiveServer.UpdateObjectiveStatus:output_type -> oj.objective.objective.CommonRsp
+	10, // 17: oj.objective.objective.ObjectiveServer.QueryObjective:output_type -> oj.objective.objective.QueryObjectiveRsp
+	5,  // 18: oj.objective.objective.ObjectiveServer.QueryAllObjective:output_type -> oj.objective.objective.QueryObjectiveListRsp
+	5,  // 19: oj.objective.objective.ObjectiveServer.QueryObjectiveList:output_type -> oj.objective.objective.QueryObjectiveListRsp
+	3,  // 20: oj.objective.objective.ObjectiveServer.QueryObjectiveAnswer:output_type -> oj.objective.objective.QueryObjectiveAnswerRsp
+	1,  // 21: oj.objective.objective.ObjectiveServer.QueryContestProblem:output_type -> oj.objective.objective.QueryContestProblemReqRsp
+	16, // 22: oj.objective.objective.ObjectiveServer.QueryObjectiveName:output_type -> oj.objective.objective.QueryObjectiveNameRsp
+	14, // [14:23] is the sub-list for method output_type
+	5,  // [5:14] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_objective_proto_init() }
@@ -1225,7 +1390,7 @@ func file_objective_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_objective_proto_rawDesc), len(file_objective_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

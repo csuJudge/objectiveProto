@@ -21,6 +21,8 @@ service ObjectiveServer {
   rpc QueryObjectiveAnswer(QueryObjectiveReq) returns (QueryObjectiveAnswerRsp) {}
   // QueryContestProblem 查询作业的题目数据
   rpc QueryContestProblem(QueryContestProblemReq) returns (QueryContestProblemReqRsp) {}
+  // QueryObjectiveName 查询客观题题名（不分页，供建/改作业选题）
+  rpc QueryObjectiveName(QueryObjectiveNameReq) returns (QueryObjectiveNameRsp) {}
 }
 
 message QueryContestProblemReq {
@@ -130,4 +132,18 @@ message UpdateObjectiveStatusReq {
   int32 objectiveID = 1;  // 客观题主键
   int32 userID      = 2;  // 用户编号
   int32 status      = 3;  // 状态
+}
+
+message QueryObjectiveNameReq {
+  int32 userID = 1;  // 用户编号，决定能否看到未发布题
+}
+
+message ObjectiveNameData {
+  int32 objectiveID    = 1;  // 客观题主键
+  string objectiveName = 2;  // 客观题名称
+  string knowledges    = 3;  // 知识点名称，逗号分隔，无知识点为空
+}
+
+message QueryObjectiveNameRsp {
+  repeated ObjectiveNameData names = 1;  // 题名集合，按 objectiveID 升序
 }
