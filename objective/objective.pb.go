@@ -601,7 +601,7 @@ type Objective struct {
 	Submission    int32                  `protobuf:"varint,13,opt,name=submission,proto3" json:"submission,omitempty"`       // 提交数
 	Solved        int32                  `protobuf:"varint,14,opt,name=solved,proto3" json:"solved,omitempty"`               // 正确数
 	Knowledge     string                 `protobuf:"bytes,15,opt,name=knowledge,proto3" json:"knowledge,omitempty"`          // 知识点
-	Answers       []string               `protobuf:"bytes,16,rep,name=answers,proto3" json:"answers,omitempty"`              // 多空题逐空答案，单空题与其他题型为空
+	Answers       []string               `protobuf:"bytes,16,rep,name=answers,proto3" json:"answers,omitempty"`              // 逐空答案，长度即空数；单空题与其他题型为长度 1 的数组
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
