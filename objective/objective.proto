@@ -46,6 +46,7 @@ message QueryObjectiveAnswerRsp{
   int32 code     = 2;  // 返回码
   string answer = 3; // 答案
   int32 ObjectiveType = 4; // 类型
+  repeated string answers = 5; // 多空题逐空答案
 }
 
 message CommonRsp {
@@ -95,6 +96,7 @@ message Objective {
   int32 submission = 13; // 提交数
   int32 solved = 14; // 正确数
   string knowledge = 15; // 知识点
+  repeated string answers = 16; // 多空题逐空答案，单空题与其他题型为空
 }
 
 message QueryObjectiveRsp {
@@ -110,6 +112,7 @@ message AddObjectiveReq {
   string answer     = 4;  // 答案
   string options    = 5;  // 选项
   int32 problemType = 6;  // 题目类型
+  repeated string answers = 7; // 多空题逐空答案，非空时拼成 answer 入库
 }
 
 message UpdateObjectiveReq {
@@ -120,6 +123,7 @@ message UpdateObjectiveReq {
   string answer     = 5;  // 答案
   string options    = 6;  // 选项
   int32 problemType = 7;  // 题目类型
+  repeated string answers = 8; // 多空题逐空答案，非空时覆盖 answer
 }
 
 message UpdateObjectiveStatusReq {

@@ -207,6 +207,7 @@ type QueryObjectiveAnswerRsp struct {
 	Code          int32                  `protobuf:"varint,2,opt,name=code,proto3" json:"code,omitempty"`                   // 返回码
 	Answer        string                 `protobuf:"bytes,3,opt,name=answer,proto3" json:"answer,omitempty"`                // 答案
 	ObjectiveType int32                  `protobuf:"varint,4,opt,name=ObjectiveType,proto3" json:"ObjectiveType,omitempty"` // 类型
+	Answers       []string               `protobuf:"bytes,5,rep,name=answers,proto3" json:"answers,omitempty"`              // 多空题逐空答案
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -267,6 +268,13 @@ func (x *QueryObjectiveAnswerRsp) GetObjectiveType() int32 {
 		return x.ObjectiveType
 	}
 	return 0
+}
+
+func (x *QueryObjectiveAnswerRsp) GetAnswers() []string {
+	if x != nil {
+		return x.Answers
+	}
+	return nil
 }
 
 type CommonRsp struct {
@@ -593,6 +601,7 @@ type Objective struct {
 	Submission    int32                  `protobuf:"varint,13,opt,name=submission,proto3" json:"submission,omitempty"`       // 提交数
 	Solved        int32                  `protobuf:"varint,14,opt,name=solved,proto3" json:"solved,omitempty"`               // 正确数
 	Knowledge     string                 `protobuf:"bytes,15,opt,name=knowledge,proto3" json:"knowledge,omitempty"`          // 知识点
+	Answers       []string               `protobuf:"bytes,16,rep,name=answers,proto3" json:"answers,omitempty"`              // 多空题逐空答案，单空题与其他题型为空
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -725,6 +734,13 @@ func (x *Objective) GetKnowledge() string {
 	return ""
 }
 
+func (x *Objective) GetAnswers() []string {
+	if x != nil {
+		return x.Answers
+	}
+	return nil
+}
+
 type QueryObjectiveRsp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`     // 返回信息
@@ -793,6 +809,7 @@ type AddObjectiveReq struct {
 	Answer        string                 `protobuf:"bytes,4,opt,name=answer,proto3" json:"answer,omitempty"`            // 答案
 	Options       string                 `protobuf:"bytes,5,opt,name=options,proto3" json:"options,omitempty"`          // 选项
 	ProblemType   int32                  `protobuf:"varint,6,opt,name=problemType,proto3" json:"problemType,omitempty"` // 题目类型
+	Answers       []string               `protobuf:"bytes,7,rep,name=answers,proto3" json:"answers,omitempty"`          // 多空题逐空答案，非空时拼成 answer 入库
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -869,6 +886,13 @@ func (x *AddObjectiveReq) GetProblemType() int32 {
 	return 0
 }
 
+func (x *AddObjectiveReq) GetAnswers() []string {
+	if x != nil {
+		return x.Answers
+	}
+	return nil
+}
+
 type UpdateObjectiveReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ObjectiveID   int32                  `protobuf:"varint,1,opt,name=objectiveID,proto3" json:"objectiveID,omitempty"` // 客观题主键
@@ -878,6 +902,7 @@ type UpdateObjectiveReq struct {
 	Answer        string                 `protobuf:"bytes,5,opt,name=answer,proto3" json:"answer,omitempty"`            // 答案
 	Options       string                 `protobuf:"bytes,6,opt,name=options,proto3" json:"options,omitempty"`          // 选项
 	ProblemType   int32                  `protobuf:"varint,7,opt,name=problemType,proto3" json:"problemType,omitempty"` // 题目类型
+	Answers       []string               `protobuf:"bytes,8,rep,name=answers,proto3" json:"answers,omitempty"`          // 多空题逐空答案，非空时覆盖 answer
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -961,6 +986,13 @@ func (x *UpdateObjectiveReq) GetProblemType() int32 {
 	return 0
 }
 
+func (x *UpdateObjectiveReq) GetAnswers() []string {
+	if x != nil {
+		return x.Answers
+	}
+	return nil
+}
+
 type UpdateObjectiveStatusReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ObjectiveID   int32                  `protobuf:"varint,1,opt,name=objectiveID,proto3" json:"objectiveID,omitempty"` // 客观题主键
@@ -1037,12 +1069,13 @@ const file_objective_proto_rawDesc = "" +
 	"\x0eContestProblem\x12\x1c\n" +
 	"\tproblemID\x18\x01 \x01(\x05R\tproblemID\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
-	"\x05score\x18\x04 \x01(\x05R\x05score\"\x85\x01\n" +
+	"\x05score\x18\x04 \x01(\x05R\x05score\"\x9f\x01\n" +
 	"\x17QueryObjectiveAnswerRsp\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\x05R\x04code\x12\x16\n" +
 	"\x06answer\x18\x03 \x01(\tR\x06answer\x12$\n" +
-	"\rObjectiveType\x18\x04 \x01(\x05R\rObjectiveType\"9\n" +
+	"\rObjectiveType\x18\x04 \x01(\x05R\rObjectiveType\x12\x18\n" +
+	"\aanswers\x18\x05 \x03(\tR\aanswers\"9\n" +
 	"\tCommonRsp\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\x05R\x04code\"\x9e\x01\n" +
@@ -1065,7 +1098,7 @@ const file_objective_proto_rawDesc = "" +
 	"\vobjectiveID\x18\x02 \x01(\x05R\vobjectiveID\">\n" +
 	"\x06Option\x12\x1a\n" +
 	"\boptionID\x18\x01 \x01(\x05R\boptionID\x12\x18\n" +
-	"\acontent\x18\x02 \x01(\tR\acontent\"\xb5\x03\n" +
+	"\acontent\x18\x02 \x01(\tR\acontent\"\xcf\x03\n" +
 	"\tObjective\x12 \n" +
 	"\vobjectiveID\x18\x01 \x01(\x05R\vobjectiveID\x12\x18\n" +
 	"\acontent\x18\x02 \x01(\tR\acontent\x12\x12\n" +
@@ -1087,18 +1120,20 @@ const file_objective_proto_rawDesc = "" +
 	"submission\x18\r \x01(\x05R\n" +
 	"submission\x12\x16\n" +
 	"\x06solved\x18\x0e \x01(\x05R\x06solved\x12\x1c\n" +
-	"\tknowledge\x18\x0f \x01(\tR\tknowledge\"\x82\x01\n" +
+	"\tknowledge\x18\x0f \x01(\tR\tknowledge\x12\x18\n" +
+	"\aanswers\x18\x10 \x03(\tR\aanswers\"\x82\x01\n" +
 	"\x11QueryObjectiveRsp\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\x05R\x04code\x12?\n" +
-	"\tobjective\x18\x03 \x01(\v2!.oj.objective.objective.ObjectiveR\tobjective\"\xab\x01\n" +
+	"\tobjective\x18\x03 \x01(\v2!.oj.objective.objective.ObjectiveR\tobjective\"\xc5\x01\n" +
 	"\x0fAddObjectiveReq\x12\x18\n" +
 	"\acontent\x18\x01 \x01(\tR\acontent\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x16\n" +
 	"\x06userID\x18\x03 \x01(\x05R\x06userID\x12\x16\n" +
 	"\x06answer\x18\x04 \x01(\tR\x06answer\x12\x18\n" +
 	"\aoptions\x18\x05 \x01(\tR\aoptions\x12 \n" +
-	"\vproblemType\x18\x06 \x01(\x05R\vproblemType\"\xd0\x01\n" +
+	"\vproblemType\x18\x06 \x01(\x05R\vproblemType\x12\x18\n" +
+	"\aanswers\x18\a \x03(\tR\aanswers\"\xea\x01\n" +
 	"\x12UpdateObjectiveReq\x12 \n" +
 	"\vobjectiveID\x18\x01 \x01(\x05R\vobjectiveID\x12\x18\n" +
 	"\acontent\x18\x02 \x01(\tR\acontent\x12\x12\n" +
@@ -1106,7 +1141,8 @@ const file_objective_proto_rawDesc = "" +
 	"\x06userID\x18\x04 \x01(\x05R\x06userID\x12\x16\n" +
 	"\x06answer\x18\x05 \x01(\tR\x06answer\x12\x18\n" +
 	"\aoptions\x18\x06 \x01(\tR\aoptions\x12 \n" +
-	"\vproblemType\x18\a \x01(\x05R\vproblemType\"l\n" +
+	"\vproblemType\x18\a \x01(\x05R\vproblemType\x12\x18\n" +
+	"\aanswers\x18\b \x03(\tR\aanswers\"l\n" +
 	"\x18UpdateObjectiveStatusReq\x12 \n" +
 	"\vobjectiveID\x18\x01 \x01(\x05R\vobjectiveID\x12\x16\n" +
 	"\x06userID\x18\x02 \x01(\x05R\x06userID\x12\x16\n" +
