@@ -96,7 +96,7 @@ message Objective {
   int32 submission = 13; // 提交数
   int32 solved = 14; // 正确数
   string knowledge = 15; // 知识点
-  repeated string answers = 16; // 多空题逐空答案，单空题与其他题型为空
+  repeated string answers = 16; // 逐空答案，长度即空数；单空题与其他题型为长度 1 的数组
 }
 
 message QueryObjectiveRsp {
